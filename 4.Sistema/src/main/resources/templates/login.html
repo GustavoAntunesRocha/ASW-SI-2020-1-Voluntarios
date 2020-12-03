@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<title>Spring Security Example</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+<script type="text/javascript">
+	$.ajaxSetup({
+		beforeSend : function(xhr, settings) {
+			if (settings.type == 'POST' || settings.type == 'PUT'
+					|| settings.type == 'DELETE') {
+				if (!(/^http:.*/.test(settings.url) || /^https:.*/
+						.test(settings.url))) {
+					// Only send the token to relative URLs i.e. locally.
+					xhr.setRequestHeader("X-XSRF-TOKEN", Cookies
+							.get('XSRF-TOKEN'));
+				}
+			}
+		}
+	});
+</script>
+</head>
+<body>
+	<div th:if="${param.error}">Invalid username and password.</div>
+	<div th:if="${param.logout}">You have been logged out.</div>
+	<form th:action="@{/login}" method="post">
+		<div>
+			<label> User Name : <input type="text" name="username" />
+			</label>
+		</div>
+		<div>
+			<label> Password: <input type="password" name="password" />
+			</label>
+		</div>
+		<div>
+			<input type="submit" value="Sign In" />
+		</div>
+	</form>
+	<div class="container">
+		Login com GitHub: <a href="/oauth2/authorization/github">clique
+			aqui</a>
+	</div>
+</body>
+</html>

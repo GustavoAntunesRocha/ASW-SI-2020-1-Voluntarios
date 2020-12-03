@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
+<script type="text/javascript">
+	$.get("/userName", function(data) {
+		$("#user").html(data.name);
+		if(data.name != null){
+			$(".userName").hide()
+		}
+		if(data.name == null){
+			$(".userNameOauth").hide()
+		}
+	});
+</script>
+<title>Sistema de voluntariado</title>
+</head>
+<body>
+<div class="userName">
+	<h1 th:inline="text">Hello [[${#httpServletRequest.remoteUser}]]!</h1>
+</div>
+<div class="userNameOauth">
+	<h1>Hello <span id="user"></span>!</h1>
+</div>
+	<br>
+	<h2>Welcome!</h2>
+	<form th:action="@{/logout}" method="post">
+		<input type="submit" value="Sign Out" />
+	</form>
+</body>
+</html>
