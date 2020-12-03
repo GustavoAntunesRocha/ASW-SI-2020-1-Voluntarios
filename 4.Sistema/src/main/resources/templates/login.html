@@ -27,24 +27,41 @@
 </script>
 </head>
 <body>
-	<div th:if="${param.error}">Invalid username and password.</div>
-	<div th:if="${param.logout}">You have been logged out.</div>
-	<form th:action="@{/login}" method="post">
-		<div>
-			<label> User Name : <input type="text" name="username" />
-			</label>
-		</div>
-		<div>
-			<label> Password: <input type="password" name="password" />
-			</label>
-		</div>
-		<div>
-			<input type="submit" value="Sign In" />
-		</div>
-	</form>
+	<br>
 	<div class="container">
-		Login com GitHub: <a href="/oauth2/authorization/github">clique
-			aqui</a>
+		<div class="d-flex justify-content-center h-100">
+			<div class="card">
+				<div class="card-header">
+					<h3>Sign In</h3>
+				</div>
+				<div class="card-body">
+					<div th:if="${param.error}">Invalid username and password.</div>
+					<div th:if="${param.logout}">You have been logged out.</div>
+					<form th:action="@{/login}" method="post">
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<label> User Name : <input class="form-control" type="text" name="username" />
+								</label>
+							</div>
+						</div>
+						<div class="input-group form-group">
+							<div class="input-group-prepend">
+								<label> Password: <input class="form-control" type="password" name="password" />
+								</label>
+							</div>
+						</div>
+						<div>
+							<input type="submit" value="Sign In" class="btn btn-primary"/>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br>
+		<div class="d-flex justify-content-center h-100">
+			Login com GitHub: <a href="/oauth2/authorization/github"> clique
+				aqui</a>
+		</div>
 	</div>
 </body>
 </html>
