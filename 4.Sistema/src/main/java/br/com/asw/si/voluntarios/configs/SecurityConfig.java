@@ -1,6 +1,7 @@
 package br.com.asw.si.voluntarios.configs;
 
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -11,11 +12,26 @@ import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
+	
+	private static final String[] PUBLIC_MATCHERS = {
+			"/login", "/webjars/**", "/user/signup","/h2-console/**"
+			
+	};
+	
+	private static final String[] PUBLIC_MATCHERS_GET = {
+	};
+
+	private static final String[] PUBLIC_MATCHERS_POST = {
+			"/user"
+	};
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 			.authorizeRequests()
-				.antMatchers("/login", "/webjars/**").permitAll()
+			.antMatchers(HttpMethod.POST, PUBLIC_MATCHERS_POST).permitAll()
+			.antMatchers(HttpMethod.GET, PUBLIC_MATCHERS_GET).permitAll()
+			.antMatchers(PUBLIC_MATCHERS).permitAll()
 				.anyRequest().authenticated()
 				.and()
 			.formLogin()
@@ -29,6 +45,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                )
 	        .oauth2Login()
 	        .loginPage("/login");
+		http.csrf().disable();
+	    http.headers().frameOptions().disable();
 	}
 
 	@Override

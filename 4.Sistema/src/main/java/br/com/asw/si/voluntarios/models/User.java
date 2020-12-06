@@ -8,6 +8,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.TableGenerator;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 
 @Entity
 public class User {
@@ -17,16 +20,21 @@ public class User {
 	@TableGenerator(table = "SEQUENCES_USERS", name = "CodeGenerator")
 	private int id;
 
+	@NotNull(message = "Name is mandatory")
 	private String name;
 
+	@NotNull(message = "E-mail is mandatory")
 	@Column(unique = true)
 	private String email;
 
 	private Date creationDate;
 
+	@NotNull(message = "User name is mandatory")
 	@Column(unique = true)
 	private String username;
 
+	@NotNull(message = "Password is mandatory")
+	@Size(min=6, max=30, message = "Password lenght must be between 6 and 30 characters ")
 	private String password;
 
 	
@@ -34,14 +42,13 @@ public class User {
 	
 	public User() {}
 
-	public User(String name, String email, String username, String password, String authorities) {
+	public User(String name, String email, String username, String password) {
 		super();
 		this.name = name;
 		this.email = email;
 		this.creationDate = new Date();
 		this.username = username;
 		this.password = password;
-		this.authorities = authorities;
 	}
 
 	public int getId() {

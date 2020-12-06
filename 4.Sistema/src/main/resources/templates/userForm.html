@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="https://www.thymeleaf.org"
+	xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+<meta charset="ISO-8859-1">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css"
+	href="/webjars/bootstrap/css/bootstrap.min.css" />
+<script type="text/javascript" src="/webjars/jquery/jquery.min.js"></script>
+<script type="text/javascript"
+	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
+</head>
+<body>
+	<div class="container">
+	<br>
+		<div class="d-flex justify-content-center h-100">
+			<form action="#" th:action="@{/user}" th:object="${user}"
+				method="post">
+				<div class="input-group form-group">
+					<label for="inputName">Name:</label> <input id="inputName"
+						type="text" th:field="*{name}" />
+					<p th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Name
+						Error</p>
+				</div>
+				<div class="input-group form-group">
+					<label>Email:</label> <input type="text" th:field="*{email}" />
+					<p th:if="${#fields.hasErrors('email')}" th:errors="*{email}">Email
+						Error</p>
+				</div>
+				<div class="input-group form-group">
+					<label>Username:</label> <input type="text" th:field="*{username}" />
+					<p th:if="${#fields.hasErrors('username')}" th:errors="*{username}">Username
+						Error</p>
+				</div>
+				<div class="input-group form-group">
+					<label>Password:</label> <input type="password" th:field="*{password}" />
+					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password
+						Error</p>
+				</div>
+				<div>
+					<button class="btn btn-success" type="submit">Submit</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</body>
+</html>

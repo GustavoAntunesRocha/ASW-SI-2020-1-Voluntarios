@@ -10,7 +10,7 @@
 	src="/webjars/bootstrap/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="/webjars/js-cookie/js.cookie.js"></script>
 <script type="text/javascript">
-	$.get("/userName", function(data) {
+	$.get("/user/userName", function(data) {
 		$("#user").html(data.name);
 		if(data.name != null){
 			$(".userName").hide()
