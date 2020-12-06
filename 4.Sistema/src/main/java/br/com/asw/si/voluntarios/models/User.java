@@ -1,18 +1,29 @@
 package br.com.asw.si.voluntarios.models;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.stream.Collectors;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Table;
 import javax.persistence.TableGenerator;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import br.com.asw.si.voluntarios.enums.Perfil;
+
+
 
 @Entity
+@Table(name="USERS")
 public class User {
 
 	@Id
@@ -34,13 +45,18 @@ public class User {
 	private String username;
 
 	@NotNull(message = "Password is mandatory")
-	@Size(min=6, max=30, message = "Password lenght must be between 6 and 30 characters ")
+	@Size(min=6, message = "Min password lenght is 6 characters ")
 	private String password;
 
+	@ElementCollection(fetch = FetchType.EAGER)
+	@CollectionTable(name = "AUTHORITIES")
+	private Set<Integer> authorities = new HashSet<>();
+		
+	private boolean enabled;
 	
-	private String authorities;
-	
-	public User() {}
+	public User() {
+		addAuthoritie(Perfil.USER);
+	}
 
 	public User(String name, String email, String username, String password) {
 		super();
@@ -49,6 +65,7 @@ public class User {
 		this.creationDate = new Date();
 		this.username = username;
 		this.password = password;
+		this.enabled = true;
 	}
 
 	public int getId() {
@@ -99,12 +116,20 @@ public class User {
 		this.password = password;
 	}
 
-	public String getAuthorities() {
-		return authorities;
+	public Set<Perfil> getAuthorities() {
+		return authorities.stream().map(x -> Perfil.toEnum(x)).collect(Collectors.toSet());
 	}
 
-	public void setAuthorities(String authorities) {
-		this.authorities = authorities;
+	public void addAuthoritie(Perfil perfil) {
+		this.authorities.add(perfil.getCod());
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
 	}
 
 }
