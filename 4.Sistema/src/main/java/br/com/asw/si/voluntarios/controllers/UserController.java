@@ -13,6 +13,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import br.com.asw.si.voluntarios.models.User;
 import br.com.asw.si.voluntarios.services.UserService;
@@ -25,6 +26,7 @@ public class UserController {
 	private UserService service;
 
     @GetMapping("/userName")
+    @ResponseBody
     public Map<String, Object> user(@AuthenticationPrincipal OAuth2User principal) {
     	if(principal == null) {
     		return null;

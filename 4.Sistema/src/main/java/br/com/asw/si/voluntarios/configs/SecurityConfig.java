@@ -57,8 +57,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 	                )
 	        .oauth2Login()
 	        .loginPage("/login");
-		http.csrf().disable();
-	    http.headers().frameOptions().disable();
+		
+		  http.csrf().disable(); 
+		  http.headers().frameOptions().disable();
+		 
 	}
 	
 	@Override
