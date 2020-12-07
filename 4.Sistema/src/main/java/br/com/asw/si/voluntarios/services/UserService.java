@@ -22,16 +22,16 @@ public class UserService {
 	@Autowired
 	private BCryptPasswordEncoder pe;
 	
-	public void create(User user) {
+	public User create(User user) {
 		try {
 			User obj = new User(user.getName(), user.getEmail(), user.getUsername(), pe.encode(user.getPassword()));
 			obj.setCreationDate(new Date());
 			obj.addAuthoritie(Perfil.USER);
 			repository.save(obj);
-			
+			return obj;
 		}
 		catch(DataIntegrityViolationException e) {
-			
+			return null;
 		}
 	}
 	

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,14 +41,16 @@ public class UserController {
     }
 
     @PostMapping
-    public String create(@Valid User user, BindingResult bindingResult) {
-    	System.out.println("Teste");
-    	System.out.println(user.getEmail());
+    public String create(@Valid User user, BindingResult bindingResult, Model model) {
     	if (bindingResult.hasErrors()) {
 			return "/userForm";
 		}
     	
-    	service.create(user);
-		return "redirect:/login";
+    	if(service.create(user) != null) {
+    		return "redirect:/login";
+    	} else {
+    		model.addAttribute("msg", "Usuário ou e-mail já está em uso!");
+    		return "/userForm";
+    	}
     }
 }

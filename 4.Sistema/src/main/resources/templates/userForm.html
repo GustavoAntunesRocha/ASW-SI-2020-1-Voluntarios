@@ -13,7 +13,12 @@
 </head>
 <body>
 	<div class="container">
-	<br>
+		<br>
+		<div class="alert alert-danger alert-dismissible fade show"
+			role="alert" th:if="${not #strings.isEmpty(msg)}">
+			<span th:text="${msg}"></span>
+		</div>
+		<br>
 		<div class="d-flex justify-content-center h-100">
 			<form action="#" th:action="@{/user}" th:object="${user}"
 				method="post">
@@ -34,7 +39,8 @@
 						Error</p>
 				</div>
 				<div class="input-group form-group">
-					<label>Password:</label> <input type="password" th:field="*{password}" />
+					<label>Password:</label> <input type="password"
+						th:field="*{password}" />
 					<p th:if="${#fields.hasErrors('password')}" th:errors="*{password}">Password
 						Error</p>
 				</div>
